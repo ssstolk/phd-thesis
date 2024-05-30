@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
+<svg width="29cm" height="23cm" viewBox="-2 -2 561 443" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g>
+    <rect style="fill: #ffffff" x="120" y="0" width="78.371" height="80.9833"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ffa500" x="120" y="0" width="78.371" height="80.9833"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ffa500" x="120" y="0" width="78.371" height="80.9833"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="159.185" y="44.9417">
+    <tspan x="159.185" y="44.9417">SKOS</tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="120" y="240" width="78.371" height="80.9833"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ffa500" x="120" y="240" width="78.371" height="80.9833"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ffa500" x="120" y="240" width="78.371" height="80.9833"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="159.185" y="284.942">
+    <tspan x="159.185" y="284.942">ISO-THES</tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="120" y="360" width="78.371" height="80.9833"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ffa500" x="120" y="360" width="78.371" height="80.9833"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ffa500" x="120" y="360" width="78.371" height="80.9833"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="159.185" y="404.942">
+    <tspan x="159.185" y="404.942">UNESKOS</tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="240" y="120" width="78.371" height="80.9833"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ffa500" x="240" y="120" width="78.371" height="80.9833"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ffa500" x="240" y="120" width="78.371" height="80.9833"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="279.185" y="164.942">
+    <tspan x="279.185" y="164.942">SKOS-XL</tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="240" y="240" width="78.371" height="80.9833"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ffa500" x="240" y="240" width="78.371" height="80.9833"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ffa500" x="240" y="240" width="78.371" height="80.9833"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="279.185" y="284.942">
+    <tspan x="279.185" y="284.942">MADS</tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="360" y="240" width="78.371" height="80.9833"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ffa500" x="360" y="240" width="78.371" height="80.9833"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ffa500" x="360" y="240" width="78.371" height="80.9833"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="399.185" y="284.942">
+    <tspan x="399.185" y="284.942">XKOS</tspan>
+  </text>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="159.185" y1="360" x2="159.185" y2="320.983"/>
+  <g>
+    <rect style="fill: #ffffff" x="480" y="0" width="78.371" height="80.9833"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ffa500" x="480" y="0" width="78.371" height="80.9833"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ffa500" x="480" y="0" width="78.371" height="80.9833"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="519.185" y="44.9417">
+    <tspan x="519.185" y="44.9417">Ontopic</tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="0" y="120" width="78.371" height="80.9833"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ffa500" x="0" y="120" width="78.371" height="80.9833"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #ffa500" x="0" y="120" width="78.371" height="80.9833"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="39.1855" y="164.942">
+    <tspan x="39.1855" y="164.942">ZBWEXT</tspan>
+  </text>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="279.185,240 279.185,239 279.185,201.983 279.185,200.983 "/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="399.185,240 399.185,220.492 279.185,220.492 279.185,200.983 "/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="159.185,240 159.185,220.492 279.185,220.492 279.185,200.983 "/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="279.185,120 279.185,100.492 159.185,100.492 159.185,80.9833 "/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="39.1855,120 39.1855,100.492 159.185,100.492 159.185,80.9833 "/>
+</svg>

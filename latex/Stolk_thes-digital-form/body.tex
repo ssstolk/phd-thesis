@@ -1,0 +1,500 @@
+\chapter{A digital form for historical language thesauri on the Semantic Web}
+%\markboth{3. DIGITAL FORM}{}
+
+Computers store knowledge in various digital forms. Each form has its strengths and weaknesses, making some forms better suited for a specific purpose than others. The PDF format, for instance, is highly suitable for storing readable documents, whereas the ZIP format is a better fit for bundling and compressing files. Similarly, the form in which a historical language thesaurus is available can facilitate or hinder its intended use. Offering a thesaurus as a PDF document, for instance, allows users to read it, but hinders automated queries over the content. Similarly, some database technologies with which thesauri can be stored may facilitate querying but be less suited for reuse and expansion of the content. The form that historical language thesauri should be published in on the Web is therefore important to consider and is the main topic of this chapter.
+
+The investigation presented in this chapter was performed in December 2017 and led to the selection of a digital form (constituted by a set of so-called data vocabularies) appropriate for representing historical language thesauri on the Web. The combination and use of these vocabularies has, in a wider community towards standardization of the representation of linguistic and lexicographic resources on the Web, recently been termed Linguistic Linked Data.\footnote{Cimiano et al., \textit{Linguistic Linked Data: Representation, Generation and Applications}. Chapter 7, section 7 of the present thesis discusses recent efforts surrounding Linguistic Linked Data and software developed for exploring resources in this format.} This name will be used from Chapter 6 onwards to refer to the digital form.
+
+The outline of this chapter is as follows. Section \ref{sect:Stolk_thes-digital-form:current-forms} reflects on existing publications of historical language thesauri and their shortcomings for both computational efforts and reuse of the knowledge they contain. Best practices for publishing data on the Web are discussed to which, ideally, a data form for historical language thesauri conforms. Subsequently, section \ref{sect:Stolk_thes-digital-form:semweb} explores the Semantic Web as a candidate technology for sharing lexicographic material on the Web. %, advocated as such by James McCracken, Principal Editor of the \textit{Oxford English Dictionary}. %This technology, which facilitates so-called FAIR data, may be more appropriate for the research needs in mind than the current digital forms of historical language thesauri. 
+%The digital form proposed adopts Linked Data paradigms, facilitates data being FAIR (findable, accessible, interoperable, reusable). 
+Section \ref{sect:Stolk_thes-digital-form:semweb-hlt} defines a methodology to establish an appropriate Semantic Web form of historical language thesauri. To this end, it lists three criteria for selecting appropriate data vocabularies, sets of terminology in which Semantic Web content can be expressed. 
+Sections \ref{sect:Stolk_thes-digital-form:semweb-topicalsystem}--\ref{sect:Stolk_thes-digital-form:semweb-sense-attr} then provide analyses of key information components found in thesauri -- the topical system, lexical senses, synonymy, and sense attributes -- and thereby construct a combination of suitable data vocabularies in which to express such lexicographic resources.
+%The combination and use of these vocabularies has, in a wider community towards standardization of the representation of linguistic and lexicographic resources on the Web, recently been termed Linguistic Linked Data.
+
+
+\section{Historical language thesauri and their current forms}
+\label{sect:Stolk_thes-digital-form:current-forms}
+The existing historical language thesauri of Scots and English, discussed in Chapter 1, are offered to readers in paper form or, online, as webpages on the World Wide Web. Both of these forms are geared towards a particular goal: to provide material to users in a readable way. However, for filtering, querying, and other computational processing, these forms are far from suitable. The cause of this disadvantage is, as James McCracken, Principal Editor of the \textit{Oxford English Dictionary}, phrases it, that ``human readability always seems bound to conflict with computational parseability at some point''.\footnote{McCracken, `The Exploitation of Dictionary Data and Metadata', p. 504.} %J. McCracken, `The Exploitation of Dictionary Data and Metadata', in \textit{The Oxford Handbook of Lexicography}, ed. P. Durkin (Oxford, 2016), pp. 501–14 (p. 504). 
+%This statement is equally valid for information in a digital environment as it is for information in a non-digital environment. 
+The structure of webpages, for instance, may be machine parseable, but this parseability is meant for visualization of the content in browsers as opposed to other computational processing of the actual knowledge that the webpage documents. In short, both print and webpages are lacking in supporting many of the functional needs for thesauri that were identified in the previous chapter. Webpages are not the only form, though, in which the content of online editions of historical language thesauri exists.
+
+The electronic pages of \textit{TOE}, \textit{HTE}, \textit{HTS}, and \textit{BTH} are created dynamically by combining and arranging bits of information taken from underlying electronic databases.\footnote{The digital editions of historical language thesauri maintained by the University of Glasgow, including \textit{TOE4} and \textit{HTE3}, employ MySQL database technology. See the section `Creation of the \textit{Thesaurus}' of \textit{TOE4}.} Such practice ensures that it is relatively easy to, for example, change the visualisation of the same knowledge in future updates of the website. A change of logo, a different font, making headings bold rather than underlined --- these adjustments are then quickly made. Indeed, it is for such reasons considered good practice to separate presentation from the knowledge behind it.\footnote{See, for instance, the relation between the HTML and CSS standards: `HTML \& CSS'.} %, \textit{W3C}. \url{http://www.w3.org/standards/webdesign/htmlcss}. Accessed on August 15, 2017.
+The online editions of historical language thesauri are far from the only lexicographical works that employ a database and generate a presentation on top of it. In fact, as McCracken points out, there is an ``increasing concensus'' that a separation of knowledge from presentation form ``is how good lexicography ought to proceed'' --- for instance by first compiling a lexical database and afterwards transforming it into a human-readable dictionary or thesaurus (whether in print or electronic).\footnote{McCracken, `The Exploitation of Dictionary Data and Metadata' p. 504.}
+
+``Draw[ing] directly on the underlying lexical database'' of an electronic lexicographic resource, instead of on its presentation, facilitates computational efforts and reuse of the lexical knowledge in other digital bodies.\footnote{Ibid.} %McCracken, `The Exploitation of Dictionary Data and Metadata' (p. 504).
+In other words, the form in which databases of thesauri are published is of importance for their utilization. Unfortunately, the databases behind \textit{TOE}, \textit{HTE}, \textit{HTS}, and \textit{BTH} are not made accessible to the public. As a consequence, executing new queries (such as how many poetic senses are positioned within a given category and all its subcategories) is not possible for users. Additionally, even if these databases were made accessible, there is still the matter of whether their format and access protocols facilitate users and enable applications to work with their content.
+
+The digital form in which data is best made available is one of the subjects in guidelines for publishing data on the Web. The FAIR principles, for instance, state a number of requirements to make data findable, accessible, interoperable, and reusable.\footnote{Wilkinson et al., `The FAIR Guiding Principles for Scientific Data Management and Stewardship'.} %M. D. Wilkinson et al., `The FAIR Guiding Principles for Scientific Data Management and Stewardship', \textit{Scientific Data} 3.160018 (2016).
+Similarly, the World Wide Web Consortium (W3C) published their `Data on the Web Best Practices' (DWBP), which outline how data can be shared to ``facilitate interaction between publishers and consumers''. %\footnote{`Data on the Web Best Practices'.
+%`Data on the Web Best Practices', eds. B. F.  Lóscio et al., \textit{W3C}. \url{http://www.w3.org/TR/DWBP/}. W3C Recommendation. Created: 17 January 2017.
+%} 
+Applying these guidelines should net a number of benefits, including reuse and interoperability of the published information. The core advice on digital forms in these guidelines consists of using machine-readable standardized formats for data, reusing common data terminology for the domain, and having persistent identifiers for the dataset and bits of knowledge therein. The databases behind \textit{TOE}, \textit{HTE}, \textit{HTS}, and \textit{BTH} -- even if they were to be opened up for public access -- do not adhere to the two lastmentioned practices, hampering reuse and interoperability of the information. These databases are based on MySQL technology,\footnote{See the section `Creation of the \textit{Thesaurus}' of \textit{TOE4}.} which lacks innate features to represent lexical information by reusing common terminology and assigning persistent identifiers in the form of Internationalized Resource Identifiers (IRIs) per database entry (e.g., per lexical sense).\footnote{\textit{MySQL 5.7 Reference Manual}.} % \url{https://dev.mysql.com/doc/refman/5.7/en/}. Last updated: 19 December 2017.
+IRIs are assigned by the websites, instead, which form stable web addresses (or URLs) for categories -- but not for lexical senses or other material -- based on information captured in the databases.\footnote{The exception to this statement is the website of the \textit{HTE} edition incorporated into the \textit{OED}, which coins web addresses that identify lexical senses as well as categories.} The question remains, therefore, what data form instead might be better suited to share historical language thesauri on the Web?
+
+\section{Lexicography and the Semantic Web}
+\label{sect:Stolk_thes-digital-form:semweb}
+
+In his discussion on the exploitation of dictionary data, James McCracken not only addresses the question of why and how one would want to access such data for further computation, but also what an appropriate digital form would be to achieve such ends. He notes: ``It makes sense to adopt a single formalism---if not RDF/OWL, then certainly a model that can be readily converted to and from RDF/OWL''.\footnote{McCracken, `The Exploitation of Dictionary Data and Metadata', p. 512.} One of the arguments in favour of this formalism is that lexicographical works, McCracken notes, have graph-like characteristics.\footnote{Ibid.} %McCracken, `The Exploitation of Dictionary Data and Metadata' (p. 512).
+Lexical senses, for instance, can be seen as nodes of such a graph, connected through such relations as hyponymy and synonymy. By expressing these characteristics in an information graph, the utility of the captured knowledge is enhanced for machine processing.\footnote{Ibid., p. 511.} 
+%McCracken, `The Exploitation of Dictionary Data and Metadata', p.511.
+That RDF/OWL is seen as the ``standard formalism for information graphs'' -- and many linguistic projects have already successfully adopted it or are in the process of adopting it -- merits its recommendation as digital form in which to share lexicographical resources.\footnote{Ibid.} %McCracken, `The Exploitation of Dictionary Data and Metadata', p.511.
+But what exactly is RDF/OWL and what are the characteristics attributed to this ``standard formalism for information graphs''?
+
+RDF and OWL are fundamental standards within the Semantic Web.\footnote{See `Semantic Web'. For an accessible introduction to the Semantic Web standards and uses, see Allemang and Hendler, \textit{Semantic Web for the Working Ontologist}.} %, \textit{W3C}. \url{https://www.w3.org/standards/semanticweb/}. Accessed: 13 June 2017. %D. Allemang and J. Hendler, \textit{Semantic Web for the Working Ontologist: Effective Modeling in RDFS and OWL}, 2nd edn (Waltham, 2011).
+This Web is, in essence, one of linked data, built on top of a set of data standards and technologies that aim to add ``well-defined meaning'' to information.\footnote{Semantic Web technology was intended to add ``well-defined meaning'' to information on the Web (Berners-Lee et al., `The Semantic Web'). Examples of such meaning are relations of hyponomy and of incompatibility. The former can be expressed through the subclassification in the RDFS vocabulary (`RDF Schema 1.1'); the latter through disjointness of classes in the OWL vocabulary (`OWL 2 Web Ontology Language').} These standards and technologies provide an ``infrastructure for publishing, storing, retrieving, reusing, integrating, and analyzing data''.\footnote{Janowicz et al., `Why the Data Train Needs Semantic Rails', p. 5.} %%K. Janowicz et al., `Why the Data Train Needs Semantic Rails', \textit{AI Magazine} 36.1 (2015), 5–14 (p. 5). 
+\begin{comment}
+The Semantic Web standards have strong ties with linguistics (semantics in particular),\footnote{Semantic Web technology was intended to add ``well-defined meaning'' to information on the Web (Berners-Lee et al., `The Semantic Web'). Examples of such meaning are relations of hyponomy and of incompatibility. The former can be expressed through the subclassification in the RDFS vocabulary (`RDF Schema 1.1'); the latter through disjointness of classes in the OWL vocabulary (`OWL 2 Web Ontology Language').} internet technology (sharing and referring via internet protocols such as HTTP),\footnote{See `RDF 1.1 Concepts and Abstract Syntax';
+%, eds. R. Cyganiak et al., \textit{W3C}. \url{https://www.w3.org/TR/rdf11-concepts/}. W3C Recommendation. Created: 25 February 2014;
+and Berners-Lee, `Linked Data: Design Issues'.%, \textit{W3C}. \url{https://www.w3.org/DesignIssues/LinkedData.html}. Last updated: 18 June 2009.
+} mathematics (using set theory to classify),\footnote{See the section Classes in `RDF Schema 1.1'; and the specifications for classes and restrictions in `OWL 2 Web Ontology Language'.} and formal logic (inferring new information from existing statements).\footnote{See specifications for entailments in `RDF 1.1 Semantics'. A more accessible introduction is provided in chapter 6, `RDF and inferencing', in Allemang and Hendler, \textit{Semantic Web for the Working Ontologist}.} These influences have resulted in a data form that:
+\end{comment}
+Its data form, open for anyone to use, 
+%\item 
+is comprised of statements (or triples) that together form a network of information, one in which concepts are identified by IRIs (often in the form of web addresses or URLs).\footnote{`RDF 1.1 Concepts and Abstract Syntax'.}
+The use of IRIs allows for capturing and identifying data, %in a language-independent manner
+reusing terminology defined elsewhere, and connecting information found in different digital resources. In effect, this identification mechanism enables thesaurus content to be reused, extended with custom labels and with links to other digital resources.
+\begin{comment}
+%\item 
+separates representation from identification;\footnote{Alternative labels can be attributed to the same item, or IRI, which allows resources to be used in multilingual contexts.}
+%\item 
+enables machines to interpret stored information through common and well understood terminology;\footnote{See DWBP.}
+%\item 
+allows for additional information to be inferred from asserted statements;\footnote{See specifications for entailments in `RDF 1.1 Semantics'. A more accessible introduction is provided in chapter 6, `RDF and inferencing', in Allemang and Hendler, \textit{Semantic Web for the Working Ontologist}.}
+and utilizes internet technology to share and refer to data.\footnote{See `RDF 1.1 Concepts and Abstract Syntax';
+%, eds. R. Cyganiak et al., \textit{W3C}. \url{https://www.w3.org/TR/rdf11-concepts/}. W3C Recommendation. Created: 25 February 2014;
+and Berners-Lee, `Linked Data: Design Issues'.%, \textit{W3C}. \url{https://www.w3.org/DesignIssues/LinkedData.html}. Last updated: 18 June 2009.
+}
+%\end{itemize}
+%
+%\noindent
+\end{comment}
+These characteristics of the data form offer intrinsic support for many of the DWBP best practices and facilitate achieving the remaining ones. The underlying data format for Semantic Web information, RDF, is therefore mentioned explicitly in the DWBP documentation as highly suitable for publications on the Web. OWL provides an additional layer of expression that can be used on top of RDF for situations in which highly formal definitions and inferencing mechanisms are required.\footnote{`OWL 2 Web Ontology Language: Document Overview'.} %, 2nd edn, \textit{W3C}. \url{http://www.w3.org/TR/owl2-overview/}. W3C Recommendation. Created: 11 December 2012.
+For more informal levels of expression, other Semantic Web standards, such as SKOS, are an alternative to OWL.\footnote{`SKOS Simple Knowledge Organization System Reference'. This chapter will explore which standards are appropriate for use in a Semantic Web form of historical language thesauri from section \ref{sect:Stolk_thes-digital-form:semweb-hlt} onwards.}
+
+Together, Semantic Web standards offer a well-defined formalism for information graphs. Moreover, they are said to support the functionality desired of historical language thesauri as identified in Chapter 2, since the infrastructure of the Semantic Web allows data to be ``retrieved, accessed, reused, and integrated in a meaningful way''.\footnote{Janowicz et al., `Why the Data Train Needs Semantic Rails', p. 13.} 
+Perceived benefits in using this data form are mentioned by Christian Chiarcos et al.\footnote{Chiarcos et al., `Towards Open Data for Linguistics: Lexical Linked Data'.} One of these benefits is the ability to merge different datasets, or relate different perspectives and conceptualizations of similar data, in order to obtain a combined set of data that is validly formatted. Thus, thesauri and sets of data elaborating on them can be queried in unison.\footnote{This capability facilitates extending original thesaurus content (see requirement R3 in Chapter 2).} A second benefit is an increased level of interoperability. Using standardized terminology in describing linguistic data increases a shared understanding of that data and facilitates their interpretation by software. Moreover, the use of IRIs as identifiers ensures data can be linked without the need for duplication of information from one set into another. The ability to link (or reference) in such a manner is valuable for historical language thesauri, too, since some of these resources are subject to licenses intended for viewing only, stipulating that users are not allowed to copy or download a substantial portion of their content (e.g., \textit{TOE} and \textit{HTE}). By adopting IRIs in published thesauri, their users should be able to explore and extend these resources, engaging with the content offered, without infringing on such licenses. 
+In short, this data form is promising for representing historical language thesauri on the Web. However, since such a thesaurus is yet to be captured in this form, the question remains as to how a Semantic Web form of these lexicographic resources should be obtained.
+%which should the need to browse thesauri, expand them, reuse their content, and to filter and query their content to obtain the information sought after. %, and a means to view the thesauri in a particular state or version. 
+
+%That the Semantic Web format and technology is suitable for topical thesauri has been demonstrated by the availability and usefulness of WordNet in that format. WordNet is an ``electronic lexical database for English'', which explicitly expresses relations of synonymy, hyponomy, meronymy, and antonymy.\footnote{\textit{Encyclopedia of Language \& Linguistics}, 2nd edn, ed. K. Brown, 14 vols. (Oxford, 2006), s.v. `WordNet(s)', by C. Fellbaum.} In a sense, this linguistic resource is not unlike topical thesauri. Both organize lexicons based on semantic principles. WordNet, however, adds detail beyond most thesauri by making the semantic nature of hierarchical relation between elements more explicit. It asserts, for instance, whether one set of synonyms is subordinate to another owing either to hyponomy or meronymy. WordNet has often been used for automating word-sense disambiguation in texts and, for English, ``can be considered a \textit{de facto} standard'' for this purpose.\footnote{R. Navigli, `Word Sense Disambiguation: A Survey', \textit{ACM Computing Surveys} 41.2 (2009), 1–69 (p. 10).} Since 2006, versions of WordNet have been transformed to be expressed by means of Semantic Web technology.\footnote{For the transformation of WordNet 2.0, see `RDF/OWL Representation of WordNet'. For that of WordNet 3.0, see \textit{WordNet 3.0 in RDF}.} Expressing it in this form has facilitated a number of uses, including categorisation of documents based on their contents\footnote{See `RDF/OWL Representation of WordNet'.} and making search queries smarter by expanding the search with similar but differently phrased questions.\footnote{L. Hollink et al., `Thesaurus Enrichment for Query Expansion in Audiovisual Archives', Multimedia Tools and Applications 49.1 (2010): 235–57.} Adopting RDF/OWL and further Semantic Web standards and technologies, then, is a promising approach for bringing historical language thesauri to the Web.
+
+\section{Obtaining a Semantic Web form}
+\label{sect:Stolk_thes-digital-form:semweb-hlt}
+Considering the existing digital forms of historical language thesauri do not yet include a Semantic Web form, it could be argued that such a form could be modelled in any way one would see fit. However, as DWBP best practice 15 and FAIR principle I2 argue, reuse of common terminology in expressing knowledge increases data interoperability and chances at reuse.\footnote{See `Data on the Web Best Practices' and Wilkinson et al., `The FAIR Guiding Principles for Scientific Data Management and Stewardship'.} Such terminology for expressing the semantics of digital information is found in data vocabularies (which in the Semantic Web and Linked Data communities are sometimes referred to as metamodels, metavocabularies or, simply, vocabularies).\footnote{DWBP, for instance, employs both \textit{data vocabulary} and \textit{vocabulary}. Articles by Van Assem et al. adopt the term \textit{metamodel} instead. See Van Assem et al., `A Method for Converting Thesauri to RDF/OWL'; and Van Assem et al., `A Method to Convert Thesauri to SKOS'.} %
+%,\textit{ International Semantic Web Conference} (Hiroshima, 2004), 17–31; %, \textit{European Semantic Web Conference} (Budva, 2006), 95–109.
+DWBP indicates that one can locate appropriate data vocabularies for the Semantic Web through repositories, such as the \textit{Linked Open Vocabularies} (\textit{LOV}) repository.\footnote{`Data on the Web Best Practices'.} The best practices put forward for Semantic Web data specifically, the `Best Practices for Publishing Linked Data', also suggest using directories, such as \textit{LOV}, or, alternatively, to look into already published datasets. %\footnote{`Best Practices for Publishing Linked Data'.%, eds. B. Hyland et al., \textit{W3C}. \url{http://www.w3.org/TR/ld-bp/}. W3C Working Group Note. Created: 9 January 2014.
+%}
+It is apparent why both documents recommend \textit{LOV}. The repository contains a useful overview of existing Semantic Web data vocabularies, their terminology, and locations of access.\footnote{\textit{Linked Open Vocabularies}. % \url{http://lov.okfn.org/}. Accessed on June 13, 2017.
+For an introduction to the website and its usefulness, see the following article: Vandenbussche, `Linked Open Vocabularies'.}  %: A Gateway to Reusable Semantic Vocabularies on the Web'.%, \textit{Semantic Web} 8.3 (2017), 437–52. 
+Moreover, \textit{LOV} offers functionality to search for individual terms, query over the data vocabularies, and visualise them. At the time of writing, the repository lists well over 500 data vocabularies.\footnote{This chapter was written in December 2017. The \textit{LOV} repository has grown since and, on 18 April 2022, contains information on 774 vocabularies.} %The central repository therefore offers a suitable and convenient means to locate data vocabularies relevant for our purpose.
+Knowing where to find existing data vocabularies, one should address the question of which criteria ought to be used in selecting vocabularies for bringing historical language thesauri to the Semantic Web.
+%Knowing how to locate existing data vocabularies for the Semantic Web is but one piece of the puzzle. Selecting the right ones to express the content at hand is the next vital step in bringing historical language thesauri to the Semantic Web. What are the criteria, then, for selecting a data vocabulary? 
+
+Two crucial criteria for selecting a data vocabulary are named by Mark van Assem et al., who have converted many digital resources to Semantic Web forms successfully.\footnote{See Van Assem et al., `A Method for Converting Thesauri to RDF/OWL'; and Van Assem et al., `A Method to Convert Thesauri to SKOS'.} Firstly, the chosen terminology should facilitate preserving all knowledge and intended semantics. After all, loss of meaning or misrepresentations of the content may hinder correct interpretations of the content and its reuse. Secondly, the terminology should be a standard (or extend a standard) in order to promote interoperability with other resources similar in nature. In addition to these criteria from Van Assem et al., the present chapter takes a third into account: coherency between terms employed should be well understood. Mixing and matching individual terms from a plethora of data vocabularies, for instance, is likely to net ambiguous or even unknown connections between individual terms. Datasets can be interpreted better when terminology from a few select vocabularies is used instead. In such cases, their cohesion is known and well understood. In short, three criteria are considerd key in selecting appropriate data vocabularies: coverage, standardization, and coherency. Using these three criteria, the next sections will discuss appropriate data vocabularies for each component of historical language thesauri identified in Chapter 1: their topical system, lexical senses, and the relation of synonymy between senses. Sense attributes commonly found in these thesauri (i.e., part of speech, usage features, and language) are covered after these main components.
+
+\section{Semantic Web form for topical systems}
+\label{sect:Stolk_thes-digital-form:semweb-topicalsystem}
+On the Semantic Web, the term ``topical system'' is not as commonplace as the phenomenon itself. To illustrate, the term \textit{topical} occurs in only four \textit{LOV} vocabularies --- not one of which has a clear focus on capturing topical systems.\footnote{\textit{LOV}, s.v. `dbpedia-owl', `gold', `lmm1', `umbel'.} This result begs the question of what terminology is employed on the Semantic Web instead. The answer can be found in one of the meanings of the word \textit{thesaurus}. As Reinhard Hartmann states, one sense of the word is that of a `terminological database' or `index'.\footnote{\textit{Encyclopedia of Language \& Linguistics}, s.v. `Thesauruses', by Hartmann.} The \textit{OED} defines this particular sense, first attested in 1957, as follows: ``A classified list of terms, esp. key-words, in a particular field, for use in indexing and information retrieval.''\footnote{\textit{OED}, s.v. `thesaurus, n.', sense 2c.} In essence, this sense of \textit{thesaurus} coincides with what is known as the topical system in historical language thesauri: concepts or labels that are arranged in a hierarchical manner, typically based on the semantics of these concepts, in order to index -- or categorize -- information in various forms. I will henceforth use the term \textit{indexing thesaurus} to denote this specific sense of \textit{thesaurus}.
+
+Before discussing the results of searching \textit{LOV} for appropriate data vocabularies for indexing thesauri, it should be noted that DWBP already explicitly mentions two data models that are used to capture and exchange such thesauri. These data models, which are considered relatively straightforward since ``complex formalisms are most often not needed'' for indexing thesauri, are the ISO 25964 data model and W3C's Simple Knowledge Organization System (SKOS) vocabulary.\footnote{`Data on the Web Best Practices'.} The first-mentioned model is part of the ISO 25964 standard by the International Organization for Standardization. This standard contains guidelines on the development of indexing thesauri and proposes a data model to encourage exchange and interoperability. The current body maintaining the ISO 25964 standard, NISO, recognizes similarities between the international standard (which is divided over two parts) and SKOS.
+\begin{quotation}
+\noindent
+ISO 25964-1 essentially advises on the selection and fitting together of concepts, terms and relationships to make a good thesaurus. SKOS addresses the next step, with recommendations on porting the resultant thesauri (or other `simple Knowledge Organization Systems') to the Web. ISO 25964-2 recommends the sort of mappings that can be established between one KOS and another; SKOS presents a way of expressing these when published to the Web.\footnote{`ISO 25964 Thesaurus Schemas'.} %, \textit{NISO}. \url{http://www.niso.org/schemas/iso25964/}. Accessed on June 13, 2017.
+\end{quotation}
+The aforementioned sources thus convey that SKOS is considered an appropriate data vocabulary to express indexing thesauri on the Semantic Web. In fact, a data vocabulary has been created specifically to supplement SKOS with terms from ISO 25964 that are not already covered by SKOS, %\footnote{The additional terms from ISO 25964 are often modelled as specializations of terms in SKOS.}
+effectively porting the data model of the ISO standard to a Semantic Web context.\footnote{Isaac and De Smedt, \textit{ISO-THES}.} %A. Isaac and J. de Smedt, \textit{ISO-THES}. \url{http://purl.org/iso25964/skos-thes}. Created: 17 March 2015.
+
+Next to SKOS and its ISO 25964 supplement, further data vocabularies exist that treat indexing thesauri. A search for `thesaurus' in \textit{LOV} yielded a number that merely refer to indexing thesauri rather than expressing them (often recommending their use)\footnote{\textit{LOV}, s.v. `ptop', `dce', `dcterms', `lom', `edm', `gndo', `crm', `ecrm', `mtlo'.} or provide a definition for such reference bodies as a whole, lacking terminology to represent the actual content within.\footnote{These include \textit{LOV}, s.v. `fabio', `iol', `lingvo', `crm'.} Data vocabularies amongst the results that can be used to represent historical language thesaurus content are the Metadata Authority Description Schema (MADS), the Ontopic Ontology (Ontopic), the UNESKOS Vocabulary (UNESKOS), the ISO 25964 SKOS extension (ISO-THES), and, predictably, SKOS. Figure \ref{fig:Stolk_thes-digital-form:fig1} depicts these Semantic Web vocabularies, which can be labelled candidate vocabularies for representing a topical system, and the relationship between them. 
+
+\begin{figure}[htb]
+    \centering
+%	\framebox[\textwidth]{
+		\scalebox{0.75}[0.75]{
+		    \input{Stolk_thes-digital-form/fig/Vocabularies-IndexingThesauri (2)}
+%		}
+	}
+	\caption[]{\label{fig:Stolk_thes-digital-form:fig1}Semantic Web vocabularies that are available for indexing thesauri (depicted as squares). Vocabularies extend higher positioned ones to which they are connected by an upward path.}
+\end{figure}
+
+When considering the candidate vocabularies depicted in Figure \ref{fig:Stolk_thes-digital-form:fig1}, it is striking that the vast majority of them extends SKOS: these vocabularies complement SKOS with new terminology or specialize terms that already exist in SKOS. The ISO-THES data vocabulary, for instance, distinguishes three types of hierarchical relations and coins separate terms for these relations, relating each of them to the generic terminology for hierarchical relations available in SKOS.\footnote{See the properties \texttt{iso-thes:broaderGeneric}, \texttt{iso-thes:broaderInstantial}, \texttt{iso-thes:broaderPartitive}, which are asserted to be subproperties of \texttt{skos:broader}.} The Ontopic vocabulary is an exception, posited as an alternative to SKOS for indexing thesauri. However, the maintainers of \textit{LOV} remark that, unlike SKOS, Ontopic has seen ``no visible use'' on the Semantic Web.\footnote{\textit{LOV}, s.v. `ontopic'.} The prevalence of SKOS and the lack of adoption of Ontopic, which thereby fails to meet the standardization criterion, warrants a closer inspection of SKOS as a vocabulary for expressing topical systems of historical language thesauri.
+
+%\begin{figure}[htb]
+%\centering
+%  \includesvg[inkscapelatex=false,width=\textwidth]{Stolk_thes-digital-form/fig/fig1.svg}
+%  \caption{\label{fig:Stolk_thes-digital-form:fig1}Linked Data vocabularies that are available for indexing thesauri (depicted as squares). Vocabularies extend higher positioned ones to which they are connected by an upward path.}
+%\end{figure}
+
+
+\subsection{SKOS for topical systems}
+\label{sect:Stolk_thes-digital-form:skos}
+The SKOS data vocabulary is meant to express knowledge organization systems. Examples of such systems, according to its specification, are ``thesauri, taxonomies, classification schemes and subject heading systems''.\footnote{`SKOS Simple Knowledge Organization System Reference'.} %, eds. A. Miles and S. Bechhofer, \textit{W3C}. \url{http://www.w3.org/TR/skos-reference/}. W3C Recommendation. Created: 18 August 2009.
+These systems have a number of traits in common --- traits that can be expressed in SKOS in order to bring such knowledge to the Semantic Web environment.
+
+The terminology in SKOS revolves around the notion of concepts. The definition of the term \texttt{Concept} is ``a unit of thought'', a rather general notion that ensures wide support for informal organizing systems.\footnote{Ibid.} %`SKOS Simple Knowledge Organization System Reference', eds. A. Miles and S. Bechhofer, \textit{W3C}. \url{http://www.w3.org/TR/skos-reference/}. W3C Recommendation. Created: 18 August 2009.
+Such systems all express and organize items, and SKOS therefore includes terminology to organize concepts into informal hierarchies (using the relations \texttt{broader} and \texttt{narrower} between concepts) and to create cross-references between concepts (using the relation \texttt{related}). The concepts themselves can be described using labels and notes, and aggregated into collections (\texttt{Collection}) and schemes (\texttt{ConceptScheme}).
+
+The terminology available in SKOS is expressive enough to capture the majority of the information found in the topical system of historical language thesauri. Each category can be represented as a concept in SKOS, identified by its own IRI, labelled with a name, and placed in an informal hierarchy. The identification of a category, which encodes the position of a category within the topical system, can be expressed using the SKOS \texttt{notation} property. These identifications are, in historical language thesauri, sufficient to deduce the order of co-ordinate categories when presenting them. Editorial commentaries, too, can be expressed in SKOS through its system of notes. In short, the coverage of this data vocabulary is extensive and warrants an assessment to determine whether SKOS is sufficiently standardized, too, for representing historical language thesauri.
+
+SKOS was finalized and published in 2009 as a recommended standard by W3C, the consortium that initiated and maintains the technological specifications for the Semantic Web. As such, SKOS is backed by an authoritative body in the Semantic Web community. The quality of the vocabulary is perhaps best illustrated through its use and reuse. As Figure \ref{fig:Stolk_thes-digital-form:fig1} shows, SKOS has certainly seen reuse and specialization in other vocabularies, including ISO-THES and XKOS. In fact, \textit{LOV} shows 214 data vocabularies employing SKOS, in one way or another, at the time of writing.\footnote{\textit{LOV}, s.v. `skos'.} 
+
+Not just data vocabularies employ terminology from SKOS. A large number of indexing thesauri published on the Semantic Web, too, make use of this data vocabulary. A nonexhaustive list includes EuroVoc (the European Union's multilingual thesaurus), the NASA Thesaurus, the UNESCO Thesaurus, the Getty Vocabularies (including the Art \& Architecture Thesaurus and the Getty Thesaurus of Geographic Names), AGROVOC (the United Nation's agricultural thesaurus), the Integrated Public Sector Vocabulary, and the Medical Subject Headings. 
+Van Assem, who has ported several indexing thesauri to the Semantic Web (including the last two mentioned), advocates the use of SKOS in particular over coining new terminology that is completely unrelated to that found in SKOS.\footnote{Van Assem, \textit{Converting and Integrating Vocabularies for the Semantic Web}, pp. 145, 150.} Next to having good coverage for historical language thesauri, then, the SKOS data vocabulary is also a standard that has been adopted widely on the Semantic Web. %There is, however, one aspect that should not go unmentioned about SKOS in relation to expressing historical language thesauri.
+% other thesauri:
+% * GTAA (Dutch beeld en geluid) 
+% * MREL
+% Quite likely, still to check:
+% * ZBW
+% * Unbis
+% * GEMET
+% * LCSH
+% * INSPIRE feature concept dictionary
+% * ECLAS
+% * Rameau
+%
+% Maybe, yet to check:
+% * Library of Congress Subject Headings. URL: http://id.loc.gov/authorities/subjects.html. 
+% * Inspec Thesaurus
+% * General Multilingual Environmental Thesaurus
+% * UNBIS Thesaurus
+% * Thesaurus Ethics in the Life Sciences
+
+Although SKOS can express categories, it is not evident as to how category \emph{types} should be captured in this data vocabulary. As mentioned in Chapter 1, the historical language thesauri \textit{TOE}, \textit{HTE}, and \textit{LSM} distinguish such different types.\footnote{See section \ref{sect:Stolk_thes-content:categories-id}, `Identification of categories'.} \textit{TOE} distinguishes two, \textit{HTE} three, and \textit{LSM} four. Separation of what editors perceived as the macrostructure and the microstructure of the thesaurus, for example, are reflected in the category types.\footnote{See section \ref{sect:Stolk_thes-content:MainComponents}, `Main components'.} The lack of clarity on capturing these distinctions in SKOS has been recognized by the authors of XKOS. The XKOS data vocabulary extends SKOS in order to express so-called classification levels.
+
+\subsection{XKOS for classification levels}
+\label{sect:Stolk_thes-digital-form:xkos}
+The XKOS data vocabulary is an extension of SKOS, specifically geared towards meeting the needs of the statistical community for knowledge organization systems.\footnote{`XKOS'.}  %: An SKOS Extension for Representing Statistical Classifications'.
+%, ed. F. Cotton, \textit{DDI Alliance}. \url{http://rdf-vocabulary.ddialliance.org/xkos.html}. Unofficial Draft. Created: 18 January 2017.
+The specific requirements of this community include increased specificity for both hierarchies (distinguishing partonymy from hyponymy) and associations (distinguishing causal, sequential, and temporal relations). Additionally, the statistical community recognises levels in their hierarchical structures. The XKOS specification states that ``levels are used as a means to identify concepts within a classification [that are] used to classify instances at the same specificity'' --- similar to the purpose of category types in historical language thesauri.\footnote{Ibid.}
+
+Although the purpose of the classification levels in XKOS matches that of category types in historical language thesauri, there is a difference between the two notions. This difference makes XKOS levels unfit for expressing category types. Levels in XKOS ``correspond to all those concepts that are same distance from the top of the hierarchy''.\footnote{Ibid.} All top categories belong to the first level, all categories directly subordinate belong to the second level, and so on. This approach is valuable for those thesauri in which categories at a given depth of the taxonomy all share the \textit{type} of category. However, this condition does not always hold for historical language thesauri. As demonstrated in Chapter 1, \textit{TOE}, \textit{HTE}, and \textit{LSM}, distinguish different category types. Some of their categories have subordinates of different category types. In other words, an equal depth in the tree for categories does not imply the same level in the hierarchy of category types. The three thesauri use these types in a manner more flexible than XKOS is able to express: conceptual levels, which reflect the hierarchy of category types, rather than tree levels. This distinction is portrayed in Figure \ref{fig:Stolk_thes-digital-form:fig2}. Here, although the category ``Permission'' is four levels deep according to the definition used in XKOS, it is only a single conceptual level deep according to \textit{HTE}. \textit{HTE} categories at this conceptual level in are referred to as, simply, `Categories'. The category ``Disobedience'', which is  is visualized at the same tree level as ``Permission'', is nonetheless located in the second conceptual level of \textit{HTE} rather than the first. \textit{HTE} categories at this second conceptual level, which are thesaurus microstructure rather than its macrostructure, are referred to as `Subcategories'.
+
+%\begin{figure}[htb]
+%\centering
+%  \includesvg[inkscapelatex=false,width=0.8\textwidth]{Stolk_thes-digital-form/fig/fig2.svg}
+%  \caption{\label{fig:Stolk_thes-digital-form:fig2}Example topical system, based on HTE. The three categories that are depicted smaller in size are considered to be of a conceptual deeper, semantically finer-grained level than the others.}
+%\end{figure}
+
+\begin{figure}[htb]
+    \centering
+%	\framebox[\textwidth]{
+		\scalebox{0.8}[0.8]{
+		    \input{Stolk_thes-digital-form/fig/Content-part-TopicalSystem (including 2nd conceptual level) v2}
+%		}
+	}
+	\caption[]{\label{fig:Stolk_thes-digital-form:fig2}Two conceptual levels in \textit{HTE}.% The three categories that are depicted smaller in size, and grey in colour, are considered to be of a conceptual deeper, semantically finer-grained level than the other categories.
+	}
+\end{figure}
+
+Although XKOS levels are not appropriate for capturing category types, the manner in which the vocabulary expresses levels offers a valuable insight into how category types can be expressed. Classification levels in XKOS are specializations of concept collections in SKOS. In other words, all concepts that belong to a specific level are asserted to be members of a collection, one that XKOS calls a classification level. A classification level has a certain \texttt{depth} (from the top of the hierarchy), typically a name (such as ``sections'', ``subsections'', or ``divisions''), and possibly a \texttt{notationPattern} providing details on the pattern used for the identification of concepts at this level. The concept scheme that contains the concepts may assert the number of levels it contains (using the \texttt{numberOfLevels} relation), which these are, and how they are ordered (referring to an ordered list of classification levels through the \texttt{levels} relation).
+
+The following can be said on translating the XKOS modelling approach to the context of conceptual levels related to category types found in the historical language thesauri analysed. Firstly, %category types in historical language thesauri represent, in essence, levels of abstraction rather than levels of taxonomy depth. 
+%a notion such as conceptual level would therefore better fit the bill for present purposes.
+much like classification levels in XKOS, conceptual levels may be posited as subtypes of SKOS collections. Each conceptual level, much like a classification level, typically has a name and may have a notation pattern. The concept schemes that contain conceptual levels would require relations similar to those found in XKOS: a relation to express the number of conceptual levels, and one that lists all available levels in their order of specificity. Such terminology, required for some of the historical language thesauri, are not yet found in the available Semantic Web data vocabularies and may therefore have to be coined in a new one.\footnote{See Chapter 5, which introduces \textit{lemon-tree}, a data vocabulary that contains terminology for expressing conceptual levels in thesauri.} 
+%As the next section will demonstrate, new vocabularies are not needed to capture another component of historical language thesauri: lexical senses.
+
+\section{Semantic Web form for lexical senses}
+\label{sect:Stolk_thes-digital-form:semweb-senses}
+In order to obtain a Semantic Web form for lexical senses, \textit{LOV} has been searched once more for suitable data vocabularies. A search on the keyword `sense' yields two data vocabularies in the repository that contain terminology for expressing lexical senses: the Lexicon Model for Ontologies (LEMON) and the OLiA Annotation Model for Uby Parts of Speech (UBY). The latter indicates that its term coined for lexical senses (\texttt{Sense}) is superseded by that in LEMON (\texttt{LexicalSense}), along with ten other terms, such as that for lexicon and lexical entry.\footnote{\textit{OLiA Annotation Model for Uby Parts of Speech}.} % \url{http://purl.org/olia/ubyCat.owl}. Accessed: 20 December 2017.
+For this reason, this section focuses on the LEMON vocabulary and the extent to which it is suitable for capturing senses found in historical language thesauri.
+
+\subsection{LEMON for lexical senses}
+\label{sect:Stolk_thes-digital-form:lemon}
+The Lexicon Model for Ontologies vocabulary (LEMON) has been designed to capture lexicons and to add their lexicographical knowledge to ontologies in the Semantic Web.\footnote{McCrae et al., `Interchanging Lexical Resources on the Semantic Web'.} %, \textit{Language Resources and Evaluation} 46.4 (2012), 701–19.
+The vocabulary has seen a number of updates and was published as a stable W3C vocabulary in May 2016.\footnote{`Lexicon Model for Ontologies'.} %, eds. P. Cimiano et al., \textit{W3C}. \url{http://www.w3.org/2016/05/ontolex/}. Final Community Group Report. Created: 10 May 2016.
+This finalized version has since been adopted by a number of bodies, including the Global WordNet Association, to represent and link existing lexical resources on the Semantic Web.\footnote{`Global Wordnet Formats'.} %, \textit{Global WordNet Association}. \url{http://globalwordnet.github.io/schemas/}. Accessed: 20 December 2017.
+It is this particular version that the name LEMON will henceforth be used to indicate.
+
+LEMON consists of a number of modules. The core module, called OntoLex, contains terminology that is the most relevant for historical language thesauri. The main terms in this module are those for lexical entries (\texttt{LexicalEntry}), lexical senses (\texttt{LexicalSense}), forms (\texttt{Form}), and lexical concepts (\texttt{LexicalConcept}). Reminiscent of dictionaries -- and in line with historical language thesauri -- a lexical entry has one or more lexical senses and grammatical realizations, or forms. In order to organize lexical entries and senses not alphabetically but onomasiologically, i.e. by their meaning, it is possible to associate them with lexical concepts that can be organized hierarchically. 
+
+Lexical concepts in OntoLex are defined as a ``mental abstraction, concept or unit of thought that can be lexicalized by a given collection of senses''.\footnote{`Lexicon Model for Ontologies'.} This definition, not unlike concepts in SKOS, appears highly suitable to express categories from historical language thesauri. In fact, lexical concepts from OntoLex are asserted to be specializations of SKOS concepts. The approach outlined in this chapter to use SKOS for the topical system of thesauri is therefore strengthened by the specification of LEMON, which makes this connection between the data vocabularies explicit.
+
+As discussed, the LEMON vocabulary covers fundamental terminology for lexical senses in historical language thesauri and their relation to concepts. Next to coverage, the criteria for cohesion and standardization are also met by LEMON. Firstly, the asserted connection with SKOS enables cohesion and increases standardization and interoperability. Secondly, the LEMON data vocabulary has been popular since its creation and has continued to be widely supported. 
+%Since its inception, LEMON ``quickly came to take on the status of a de facto standard for representing lexicons as linked open data''.\footnote{A. F. Khan et al., `Tools and Instruments for Building and Querying Diachronic Computational Lexica', \textit{Proc. LT4DH} (2016), 164–71 (p. 165).} 
+Notable resources that have so far been expressed in LEMON include Princeton's WordNet and Wiktionary,\footnote{McCrae et al., `Integrating WordNet and Wiktionary with \textit{lemon}'.} %, in \textit{Linked Data in Linguistics: Representing and Connecting Language Data and Language Metadata}, eds. C. Chiarcos et al. (Heidelberg, 2012), pp. 25–34.
+Wikidata,\footnote{Nielsen, `Lexemes in Wikidata'.} and FrameNet.\footnote{Eckle-Kohler et al., `lemonUby'.} %: A Large, Interlinked, Syntactically Rich Lexical Resource for Ontologies'.%, \textit{Semantic Web} 6.4 (2015), 371–8.
+In short, the framework that LEMON offers is highly suitable for expressing lexical senses from historical language thesauri. Before delving into the matter on which data vocabularies best capture \emph{attributes} of lexical senses, the next section will first discuss how the relation of synonymy, one of the main components found in thesauri, can be expressed.
+
+\section{Semantic Web form for the relation of synonymy}
+\label{sect:Stolk_thes-digital-form:semweb-syn}
+
+On the Semantic Web, a small number of available data vocabularies is capable of expressing synonymy as found in thesauri. Searches in \textit{LOV} for `synonym' and `synonymy' located a number of candidate data vocabularies for this purpose. The majority of them contains terminology to capture synonymy between elements other than lexical senses.\footnote{\textit{LOV}, s.v. `ru', `scot', `dbpedia-owl', `uniprot'.} However, as discussed in Chapter 1, the relation of synonymy as found in thesauri is one between senses.\footnote{Indeed, near-synonymy, which is a form of synonymy between lexical senses, has been called ``the staple of thesauruses'' (Murphy, `Meaning Relations in Dictionaries', p. 448).} Only three vocabularies define their synonymy relations as lexical relations or sense relations: LEMON, GOLD,\footnote{In full, GOLD stands for General Ontology for Linguistic Description.} and LexInfo. %In order to satisfy the criterion of cohesion, a closer look at LEMON is warranted, since this data vocabulary has already been selected for representing historical language thesauri (i.e., for expressing lexical senses, see section \ref{sect:Stolk_thes-digital-form:lemon}). 
+%Moreover, GOLD and LexInfo 
+The last two vocabularies are positioned as supplementing classifications to LEMON, useful for describing linguistic objects more thoroughly.\footnote{`Lexicon Model for Ontologies'.} 
+In order to satisfy the criterion of cohesion, a closer look at LEMON is therefore warranted, since this data vocabulary has already been selected for representing historical language thesauri (i.e., for expressing lexical senses, see section \ref{sect:Stolk_thes-digital-form:lemon}). 
+If LEMON suffices in expressing synonymy for thesauri, its use is therefore preferred over that of GOLD and LexInfo.
+
+%This vocabulary, which includes terminology to capture lexical senses, also provides the means to express synonymy. 
+In LEMON, the relation of synonymy is asserted not directly between senses but indirectly by grouping them under a lexical concept. Lexical senses that are associated with the same lexical concept through the \texttt{isLexicalizedSenseOf} relation are considered to be synonymous. 
+The LEMON specification indicates how its terminology for synonymy corresponds to those used in lexical nets, such as University of Princeton's WordNet, which captures sets of synonyms (referred to as synsets).\footnote{Ibid.} 
+%`Lexicon Model for Ontologies'.%, eds. P. Cimiano et al., \textit{W3C}. \url{http://www.w3.org/2016/05/ontolex/}. Created: 10 May 2016.
+%Sets of synonyms -- or synsets as they are known in WordNet -- can thus be expressed in the LEMON vocabulary. 
+%
+%Next to a topical system and lexical senses, a number of historical language thesauri capture synonymy (or rather, near-synonymy) between lexical senses.\footnote{See Chapter 1 for a definition of, and discussion on, synonymy as found in historical language thesauri.} 
+%Capturing such relations may be done by asserting them between lexical senses or by forming sets that are known to have synonymous lexical senses as their members. 
+%
+%Considering WordNet ``can be considered a \textit{de facto} standard'' for the purpose of automating word-sense disambiguation in texts, the clear relation between LEMON and WordNet may well make historical language thesauri, too, suitable for such ends when expressed first in the former and possibly via inference mechanisms subsequently in the latter.\footnote{Navigli, `Word Sense Disambiguation', p. 10.} In fact, when one takes into account that the ``widespread use of WordNet is more often attributed to its open licensing terms than to its lexicographic qualities'', information from historical language thesauri such as \textit{HTE} may even become more important for corpus-based text analyses than the current standard.\footnote{McCracken, `The Exploitation of Dictionary Data and Metadata', p. 512.} For historical documents, machine-based processing and interpretation can certainly be enhanced by utilizing lexicons captured in historical language thesauri rather than the contemporary lexicons captured in the existing WordNets.
+%
+%
+The specification thereby demonstrates that synonymy can be captured using solely this data vocabulary, which is shown suitable for capturing this important relation in historical language thesauri on the Semantic Web. 
+%, it would be preferable to limit the current scope simply to LEMON in order to satisfy the coherency criterion for selected terminology. 
+With the relation of synonymy covered, this chapter will proceed to discuss which data vocabularies best capture sense attributes.
+
+\section{Semantic Web form for sense attributes}
+\label{sect:Stolk_thes-digital-form:semweb-sense-attr}
+Most of the historical language thesauri of Scots and English contain information on lexical senses beyond merely the existence of these senses.\footnote{As demonstrated in Chapter 1.} These thesauri specify such attributes as the part of speech, definition, language, and usage features. Although LEMON suggests definitions are best captured using the \texttt{definition} relation from SKOS,\footnote{`Lexicon Model for Ontologies'.} choosing an appropriate data vocabulary for expressing the remainder of these attributes on the Semantic Web is not as straightforward as choosing that for the other components has been. Indeed, the LEMON specification states that it neither aims to provide such terminology itself nor wishes to proclaim a single data vocabulary as being the most suitable. Instead, the specification lists a number of efforts that may be useful for describing properties of linguistic objects: GOLD, LexInfo, OLiA, ISOcat (recently superseded by DatCatInfo), and the Clarin Concept Registry.\footnote{Ibid.} %`Lexicon Model for Ontologies'.
+%At first glance, the reluctance of LEMON to put forward a single data vocabulary for sense attributes fails to address the need for standardization purposes. 
+Thus, the specification fails to standardize sense attributes. The reluctance to put forward a single data vocabulary for this purpose is not without reason, as an examination of the expressivity of the existing data vocabularies will show.
+
+\subsection{Part of speech}
+\label{sect:Stolk_thes-digital-form:semweb-pos}
+The historical language thesaurus \textit{TOE} classifies the verbs it contains as, simply, verbs or as intransitive or transitive verbs. In case of transitive verbs, this thesaurus leaves the number of objects each verb takes unspecified: they could be either monotransitive (and take only a single object) or ditransitive (and take both a direct and indirect object). When reviewing the terminology in the existing data vocabularies, it is not uncommon to find some of the aforementioned verb classifications missing. The GOLD vocabulary, for instance, contains terminology for intransitive verbs, monotransitive verbs, and ditransitive verbs, but lacks terminology for the more general notion of verbs and for transitive verbs of which it is left unspecified whether they are monotransitive or ditransitive. %\footnote{\textit{General Ontology for Linguistic Description}.% \url{http://purl.org/linguistics/gold/}. Created: 2010.}
+LexInfo, in contrast, has a generic term for verbs, but lacks discrimination in terminology between transitive and intransitive verbs. 
+%\footnote{\textit{LexInfo}, 2nd edn. \url{http://www.lexinfo.net/ontology/2.0/lexinfo}. Accessed: 20 December 2017.} 
+Some recent initiatives, such as that of the Global WordNet Association, have opted to create further data vocabularies to fulfil their specific needs in capturing parts of speech.\footnote{See `Global Wordnet Formats'. The terminology that the association coined for parts of speech has been made available at \url{http://globalwordnet.github.io/schemas/wn}.} There, too, the terminology for parts of speech is incomplete, lacking a distinction between transitive and intransitive verbs (not to mention an absence of such parts of speech as interjections, pronouns, and prepositions). 
+DatCatInfo, employed by the Lexical Markup Framework, is a data category repository that contains definitions for parts of speech, amongst others, and constitutes a rich (albeit non-RDF) alternative to the data vocabularies mentioned above. The repository contains both coarse-grained and fine-grained distinctions for parts of speech, including on transitivity, but lists multiple definitions for a single part of speech, each with its own persistent identifier, and appears to be inconclusive as to which is preferred.\footnote{The repository contains four definitions for \textit{verb}, of which two have the status ``standardized''. %} %\footnote{
+Further efforts beyond the Semantic Web towards standardizing parts of speech exist, too. A case in point is the Universal Dependencies framework, which employs the CoNLL-U file format to capture information on sentence tokens, including a universal part of speech tag (e.g., verb, noun) and a language-specific one (see `CoNLL-U Format', \textit{Universal Dependencies}).} 
+
+It may well be that there is no one perfect data vocabulary for the parts of speech found across all historical language thesauri. Some of these vocabularies lack specific parts of speech, while others lack (or might even disagree with) the hierarchy between these parts of speech as employed by thesauri. Hans-Jürgen Diller's conclusion, mentioned in Chapter 1 in reference to the topical systems of thesauri, seems relevant for part of speech hierarchies, too: ``[t]here is no one right classification; there are only more and less useful ones''.\footnote{Diller, Review of \textit{HTE1}, p. 322.} Which data vocabulary is best suited to express these particular sense attributes for a historical language thesaurus depends, therefore, on the exact needs of that thesaurus and is best approached on a case-to-case basis. %If no suitable data vocabulary is available, an option would be to define such terminology for the thesaurus in case specifically and, possibly, asserting equivalency between part-of-speech definitions found elsewhere.
+
+Regardless of the data vocabulary used, it is evident that the parts of speech together form a system to group lexical items. In that regard, parts of speech are similar to the topical system of thesauri, with two notable differences. Firstly, parts of speech are based on syntactic properties of such items instead of semantic ones. Secondly, they classify rather than categorize content because of the strict and clear criteria that the grouped items have to fulfil. The GOLD and LexInfo vocabularies acknowledge this fact by providing part of speech terminology in the form of a hierarchy of classes. %Preferably, then, any data vocabulary chosen to express parts of speech posits these as classes in a hierarchy.
+
+\subsection{Usage features}
+\label{sect:Stolk_thes-digital-form:semweb-uf}
+Any attempt at finding a single data vocabulary to capture usage features of senses seems unrealistic. As Chapter 1 has shown, most usage features are indicated through labelling, but the meaning of each label (and how it relates to other labels) is specific to the thesaurus it is found in.\footnote{Atkins and Rundell, \textit{The Oxford Guide to Practical Lexicography}, pp. 182–6.} A label should therefore always be seen within the defined context of its body. As a result, a shared terminology and definitions for these labels is not likely to be found. LexInfo, for instance, defines a formal register but not an informal one. Moreover, the exact relation between its temporal qualifiers -- \texttt{archaic}, \texttt{obsolete}, and \texttt{outdated} -- is left unspecified and such relations may very well differ between thesauri. Are outdated items per definition also considered obsolete? Quite as is the case for the part of speech attribute, which vocabulary is best suited to express usage features may depend on the thesaurus in question. If no adequate vocabulary exists, some usage features may even best be represented with terminology specifically coined per thesaurus.
+
+One usage feature that sometimes went beyond mere labelling in the existing historical language thesauri was diachronic marking: stating when a particular sense was in use. This temporal aspect is conveyed in thesauri through named, or even dated, periods in time. One particular data vocabulary, found in \textit{LOV}, appears highly suitable for capturing such temporal aspects: the Time Ontology in OWL (OWL-Time).
+
+\subsubsection{OWL-Time for diachronic usage features}
+\label{sect:Stolk_thes-digital-form:owl-time}
+The OWL-Time vocabulary contains terminology for expressing temporal aspects and revolves around the notion of temporal entities (\texttt{TemporalEntity}).\footnote{`Time Ontology in OWL'.} %, eds. S. Cox and C. Little, \textit{W3C}. \url{http://www.w3.org/TR/owl-time/}. W3C Candidate Recommendation. Created: 6 June 2017.
+A temporal entity can be either a point in time (\texttt{Instant}) or a period with a non-zero duration (\texttt{ProperInterval}). In addition to terminology to position such a temporal entity on a given calendar, OWL-Time also contains a number of terms to identify the relative ordering of temporal entities. These terms, based on work by James Allen, include relations to indicate that one interval has taken place before, during, or after another.\footnote{Allen, `Towards a General Theory of Action and Time'; and Allen and Ferguson, `Actions and Events in Interval Temporal Logic'.} %, \textit{Artificial Intelligence} 23 (1984), 123–54; %, in \textit{Spatial and Temporal Reasoning}, ed. O. Stock (Dordrecht, 1997), pp. 205–45.
+Thus, temporal aspects can be described quantitively (i.e., with their exact position on a timeline) or qualitatively (i.e., with their relative ordering).
+
+The OWL-Time data vocabulary has been published by the W3C and is, as of June 2017, a candidate recommendation. The combination of LEMON and OWL-Time has already been explored on the Semantic Web. %Other researchers, too, have opted for the OWL-Time vocabulary in capturing diachronic usage features. 
+Anas Fahad Khan et al., for example, have employed both data vocabularies to express the temporal extent of lexical domains and semantic shifts.\footnote{Khan et al., `Representing Polysemy and Diachronic Lexico-Semantic Data on the Semantic Web', pp. 42–3.} %, in \textit{Proc. 2nd Int. Workshop on Semantic Web for Scientific Heritage} (Heraklion, 2016), 37–45 (pp. 42–3).
+Thus, the Old English period and subperiods thereof could be defined quantitatively (i.e., with exact dates) or qualitatively (i.e., in relation to other periods).\footnote{Ibid., p. 44.} Isa Maks et al., too, have opted for this combination of data vocabularies for bringing diachronic lexicons to the Semantic Web.\footnote{Although the paper in the DHBenelux proceedings still shows a custom data vocabulary used for temporal usage features (Maks et al., ``Integrating Diachronous Conceptual Lexicons through Linked Open Data''), the GitHub repository shows that the researchers transitioned to the OWL-Time vocabulary shortly after. \url{https://github.com/cltl/clariah-vocab-conversion/tree/master/rdf-data}.}
+
+\subsection{Language}
+\label{sect:Stolk_thes-digital-form:lang}
+Capturing language, the final sense attribute covered in this chapter, has a more uniform approach than the part of speech and usage features do.\footnote{The language attribute is, of course, not solely applicable to lexical senses. Lexical entries, which group such senses, are language-specific, too.} LEMON prescribes that the language attribute should be captured using a language tag. Such a tag consists of codes specifically meant to associate a string with a certain language and, possibly, with a specific country or region. The specification requires these language tags to be formed using the language codes based on ISO 639 and, optionally, a hyphen followed by an ISO 3166-1 country code. 
+% See also Wikipedia:  https://en.wikipedia.org/wiki/IETF_language_tag and https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes
+Thus, this practice requires the ``en'' tag for English or ``en-GB'' for English used in Great Britain specifically. Historical languages, too, can be expressed using these codes. Old English, for example, is identified by the language code ``ang'', Middle English by ``enm'', and Lowland Scots by ``sc''. The means to apply these tags to strings are inherent to the RDF format and do not depend on any specific data vocabulary.\footnote{As with use of any registry, there are limitations of which one should be aware: codes registered might not be complete, sufficiently accurate, or sufficiently nuanced. Moreover, one may not be able to ascertain with certainty, especially in contexts of historical languages and the texts that have survived, whether a specific word belongs to a given language. Indeed, a word may even have been misread or misconstructed. Even so, language tags form a good starting point and appear suitable for use with the historical language thesauri listed in Chapter 1.}
+
+\section{Conclusion}
+\label{sect:Stolk_thes-digital-form:conclusion}
+
+This chapter has discussed what form historical language thesauri should take on the Web. Already available forms of existing historical language thesauri either fall short in terms of the functionality they can offer or hamper reuse and interoperability of their content. A new digital form based on Semantic Web technology may improve the use and reuse of these lexicographic resources. The first step in establishing a Semantic Web form of historical language thesauri has been to select appropriate data vocabularies on the basis of three criteria: coverage, standardization, and coherency. 
+%
+%Coverage refers to the capability of conveying the intended meaning of historical language thesaurus components. Cohesion indicates that the connection between terms and, in a broader scope, between data vocabularies should be well known and understood. Standardization points to the need for the terminology to be relatively stable and widely adopted in the Semantic Web community. 
+Data vocabularies that meet these criteria have been located for many of the key components found in historical language thesauri of Scots and English. For the topical system, senses, and synonymy, SKOS and LEMON offer terminology that covers most needs. For other components of these thesauri, it has not been as straightforward to find already existing data vocabularies that meet the three criteria. For parts of speech, for instance, there may be no one right data vocabulary to use across all historical language thesauri. Be that as it may, the Semantic Web form constructed in this chapter is in line with prominent guidelines on publishing data on the Web, contributes to data being FAIR, and may well facilitate the functionality over historical language thesauri sought after by researchers --- a hypothesis tested in Part III of this dissertation. Before this evaluation, the next two chapters of Part II will continue to discuss aspects of the Semantic Web form of historical language thesauri by identifying lacunae in LEMON and introducing complementary terminology for representing thesauri, specifically, in this form.
+
+%Although a clear choice for existing data vocabularies could not be made for every historical language thesaurus component, the selection of LEMON and SKOS for some of the more fundamental components should facilitate reuse and interoperability to a fair degree. Even in choosing these data vocabularies, however, it would be naïve to think that these standards will never change and cannot be surpassed in the future by others with a higher adoption rate. In other words, the three criteria used in this chapter for selecting terminology might provide different results in a few years' time. This evolution of data vocabularies is partly why coverage is such an important criterion in selecting them. If knowledge is indeed captured as completely as possible in a Semantic Web form, then transitioning that Semantic Web knowledge to other, more up-to-date terminology should present a smaller challenge than otherwise the case. 
+
+
+%The next two chapters will put into practice the findings from the current chapter by detailing the transition of \textit{TOE} from its current digital form to its preferred Semantic Web one.
+
+
+\section*{References}
+
+\begin{list}{}%
+{\leftmargin=0.5in \itemindent=-0.5in}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\parsep}{0pt}
+
+\item %CITED IN TEXT
+`AGROVOC Linked Data', \textit{AIMS}. \url{http://aims.fao.org/standards/agrovoc/linked-open-data}. Accessed: 20 December 2017.
+
+\item %CITED IN TEXT
+Allemang, D. and J. Hendler, \textit{Semantic Web for the Working Ontologist: Effective Modeling in RDFS and OWL}, 2nd edn (Waltham, 2011).
+
+\item %CITED IN TEXT
+Allen, J. F., `Towards a General Theory of Action and Time', \textit{Artificial Intelligence} 23 (1984), 123–54.
+
+\item %CITED IN TEXT
+Allen, J. F. and G. Ferguson, `Actions and Events in Interval Temporal Logic', in \textit{Spatial and Temporal Reasoning}, ed. O. Stock (Dordrecht, 1997), pp. 205–45.
+
+\item % CITED IN CHAPTER
+Atkins, B. T. S. and M. Rundell, \textit{The Oxford Guide to Practical Lexicography} (Oxford, 2008).
+
+\item %CITED IN TEXT
+Berners-Lee, T. et al., `The Semantic Web', \textit{Scientific American Magazine} (May 2001). 
+
+\item %CITED IN TEXT
+Berners-Lee, T., `Linked Data: Design Issues', \textit{W3C}. \url{https://www.w3.org/DesignIssues/LinkedData.html}. Last updated: 18 June 2009.
+
+\item %CITED IN TEXT
+`Best Practices for Publishing Linked Data', eds. B. Hyland et al., \textit{W3C}. \url{http://www.w3.org/TR/ld-bp/}. W3C Working Group Note. Created: 9 January 2014.
+
+\item %CITED IN TEXT
+Chiarcos, C. et al., `Towards Open Data for Linguistics: Lexical Linked Data', in \textit{New Trends of Research in Ontologies and Lexical Resources: Ideas, Projects, Systems}, eds. A. Oltramari, P. Vossen, L. Qin, and E. Hovy (Heidelberg, 2013), pp. 7–25.
+
+\item %CITED IN TEXT
+Cimiano, P. et al., \textit{Linguistic Linked Data: Representation, Generation and Applications} (Cham, 2020). doi: \href{https://doi.org/10.1007/978-3-030-30225-2}{\url{10.1007/978-3-030-30225-2}}.
+
+\item %CITED IN TEXT
+`CoNLL-U Format', \textit{Universal Dependencies}. \url{https://universaldependencies.org/format.html}.
+
+\item %CITED IN TEXT
+`Data on the Web Best Practices', eds. B. F.  Lóscio et al., \textit{W3C}. \url{http://www.w3.org/TR/DWBP/}. W3C Recommendation. Created: 17 January 2017.
+
+\item % CITED IN TEXT
+\textit{DatCatInfo}. \url{https://datcatinfo.net}. Accessed: 20 July 2022.
+
+\item % CITED IN TEXT
+Diller, H., Review of \textit{HTE1}, \textit{Anglia} 128.2 (2010), 319–23.
+
+\item %CITED IN TEXT
+Eckle-Kohler, J. et al., `lemonUby: A Large, Interlinked, Syntactically Rich Lexical Resource for Ontologies', \textit{Semantic Web} 6.4 (2015), 371–8.
+
+%\item 
+% = Judith Eckle-Kohler, John McCrae, and Christian Chiarcos. 2015. lemonUby - A large, interlinked, syntactically rich lexical resource for ontologies. SEMANTIC WEB, 6(4):371–378.
+
+\item %CITED IN TEXT
+\textit{Encyclopedia of Language \& Linguistics}, 2nd edn, ed. K. Brown, 14 vols. (Oxford, 2006).
+
+\item %CITED IN TEXT
+\textit{EuroVoc: Multilingual Thesaurus of the European Union}. \url{http://eurovoc.europa.eu/}. Accessed: 20 December 2017.
+
+\item %CITED IN TEXT
+\textit{General Ontology for Linguistic Description}. \url{http://purl.org/linguistics/gold/}. Created: 2010.
+
+\item %CITED IN TEXT
+`Getty Vocabularies', \textit{The Getty Research Institute}. \url{http://www.getty.edu/research/tools/vocabularies/}. Accessed: 20 December 2017.
+
+\item %CITED IN TEXT
+`Global Wordnet Formats', \textit{Global WordNet Association}. \url{http://globalwordnet.github.io/schemas/}. Accessed: 20 December 2017.
+
+\item %CITED IN TEXT
+Hollink, L. et al., `Thesaurus Enrichment for Query Expansion in Audiovisual Archives', \textit{Multimedia Tools and Applications} 49.1 (2010): 235–57.
+
+\textit{HTE1} = \textit{Historical Thesaurus of the Oxford English Dictionary}, 2 vols., eds. C. Kay et al. (Oxford, 2009).
+
+\item %CITED IN TEXT
+`HTML \& CSS', \textit{W3C}. \url{http://www.w3.org/standards/webdesign/htmlcss}. Accessed: August 15, 2017.
+
+\item %CITED IN TEXT
+`Integrated Public Sector Vocabulary', \textit{Joinup}. 
+\url{https://joinup.ec.europa.eu/catalogue/asset_release/integrated-public-sector-vocabulary}. Accessed: 20 December 2017.
+
+\item %CITED IN TEXT
+Isaac, A. and J. de Smedt, \textit{ISO-THES}. \url{http://purl.org/iso25964/skos-thes}. Created: 17 March 2015.
+
+\item %CITED IN TEXT
+`ISO 25964 Thesaurus Schemas', \textit{NISO}. \url{http://www.niso.org/schemas/iso25964/}. Accessed: 13 June 2017.
+
+\item %CITED IN TEXT
+Janowicz, K. et al., `Why the Data Train Needs Semantic Rails', \textit{AI Magazine} 36.1 (2015), 5–14.
+
+\item %CITED IN TEXT
+Khan, A. F. et al., `Tools and Instruments for Building and Querying Diachronic Computational Lexica', Proceedings of the Workshop on Language Technology Resources and Tools for Digital Humanities, Osaka, December 2016, pp. 164–71. \url{https://aclanthology.org/W16-4022.pdf}.
+
+%\item 
+% = Khan, Anas Fahad, Andrea Bellandi, Monica Monachini. ``Tools and Instruments for Building and Querying Diachronic Computational Lexica''. \textit{Proceedings LT4DH} (2016) pp.164-171 (p.165).
+
+\item %CITED IN TEXT
+Khan, A. F. et al., `Representing Polysemy and Diachronic Lexico-Semantic Data on the Semantic Web', Proceedings of the 2nd International Workshop on Semantic Web for Scientific Heritage, Heraklion, 30 May 2016, pp. 37–45. \url{https://ceur-ws.org/Vol-1595/paper4.pdf}.
+
+\item %CITED IN TEXT
+`Lexicon Model for Ontologies', eds. P. Cimiano et al., \textit{W3C}. \url{http://www.w3.org/2016/05/ontolex/}. Final Community Group Report. Created: 10 May 2016.
+
+\item %CITED IN TEXT
+\textit{LexInfo}, 2nd edn. \url{http://www.lexinfo.net/ontology/2.0/lexinfo}. Accessed: 20 December 2017.
+
+\item %CITED IN TEXT
+\textit{Linked Open Vocabularies}. \url{https://lov.linkeddata.es/}. Accessed: 13 June 2017 at \url{http://lov.okfn.org/}.
+
+\item %CITED IN TEXT
+Maks, I. et al., ``Integrating Diachronous Conceptual Lexicons through Linked Open Data'', Proceedings of DHBenelux 2016, Belval, 8-10 June 2016, pp. 37–45.
+
+\item %CITED IN TEXT
+McCracken, J., `The Exploitation of Dictionary Data and Metadata', in \textit{The Oxford Handbook of Lexicography}, ed. P. Durkin (Oxford, 2016), pp. 501–14.
+
+\item %CITED IN TEXT
+McCrae, J. et al., `Integrating WordNet and Wiktionary with \textit{lemon}', in \textit{Linked Data in Linguistics: Representing and Connecting Language Data and Language Metadata}, eds. C. Chiarcos et al. (Heidelberg, 2012), pp. 25–34.
+
+%\item 
+% = John McCrae, Elena Montiel-Ponsoda, and Philipp Cimiano, 2012. Integrating WordNet and Wiktionary with lemon, pages 25–34. Springer.
+
+\item %CITED IN TEXT
+McCrae, J. et al., `Interchanging Lexical Resources on the Semantic Web', \textit{Language Resources and Evaluation} 46.4 (2012), 701–19.
+
+%\item 
+% = McCrae, J., Aguado-de Cea, G., Buitelaar, P., Cimiano, P., Declerck, T., Gmez-Prez, A., Gracia, J., Hollink, L., Montiel-Ponsoda, E., Spohr, D., Wunner, T.: Interchanging lexical resources on the Semantic Web. Language Resources and Evaluation 46(4), 701-719 (2012).
+
+\item %CITED IN TEXT
+`Medical Subject Headings', \textit{U.S. National Library of Medicine}. \url{https://www.nlm.nih.gov/mesh/}. Accessed: 20 December 2017.
+
+\item % CITED IN TEXT
+Murphy, M. L., `Meaning Relations in Dictionaries: Hyponymy, Meronymy, Synonymy, Antonymy, and Contrast', in \textit{The Oxford Handbook of Lexicography}, ed. P. Durkin (Oxford, 2016), pp. 439–56.
+
+\item %CITED IN TEXT
+\textit{MySQL 5.7 Reference Manual}. \url{https://dev.mysql.com/doc/refman/5.7/en/}. Last updated: 19 December 2017.
+
+\item %CITED IN TEXT
+`NASA Thesaurus', \textit{NASA}. \url{https://www.sti.nasa.gov/nasa-thesaurus/}. Accessed: 20 December 2017.
+
+\item %CITED IN TEXT
+Navigli, R., `Word Sense Disambiguation: A Survey', \textit{ACM Computing Surveys} 41.2 (2009), 1–69.
+
+\item %CITED IN TEXT
+Nielsen, F., `Lexemes in Wikidata: 2020 Status', Proceedings of the 7th Workshop on Linked Data in Linguistics, Marseille, May 2020, pp. 82-6. \url{https://aclanthology.org/2020.ldl-1.12.pdf}.
+
+\item %CITED IN TEXT
+\textit{OLiA Annotation Model for Uby Parts of Speech}. \url{http://purl.org/olia/ubyCat.owl}. Accessed: 20 December 2017.
+
+\item %CITED IN TEXT
+`OWL 2 Web Ontology Language: Document Overview', 2nd edn, \textit{W3C}. \url{http://www.w3.org/TR/owl2-overview/}. W3C Recommendation. Created: 11 December 2012.
+
+%\item 
+%`OWL 2 Web Ontology Language: Structural Specification and Functional-Style Syntax', 2nd edn, eds. B. Motik et al., \textit{W3C}. \url{https://www.w3.org/TR/owl2-syntax/}. W3C Recommendation. Created: 27 October 2009.
+
+\item %CITED IN TEXT
+`RDF/OWL Representation of WordNet', eds. M. van Assem et al., \textit{W3C}. \url{http://www.w3.org/TR/wordnet-rdf/}. Last updated: 19 June 2006.
+
+%\item %CITED IN TEXT
+%`RDF 1.1 Concepts and Abstract Syntax', eds. R. Cyganiak et al., \textit{W3C}. \url{https://www.w3.org/TR/rdf11-concepts/}. W3C Recommendation. Created: 25 February 2014.
+
+\item %CITED IN TEXT
+`RDF 1.1 Semantics', eds. P. J. Hayes and P. F. Patel-Schneider, \textit{W3C}. \url{https://www.w3.org/TR/rdf11-mt/}. W3C Recommendation. Created: 25 February 2014.
+
+%\item 
+%`RDF Schema 1.1', eds. D. Brickley et al., \textit{W3C}. \url{https://www.w3.org/TR/rdf-schema/}. W3C Recommendation. Created: 25 February 2014.
+
+%\item 
+%Roberts, J., `Silent Reading', in \textit{Mapping English Metaphor through Time}, eds. W. Anderson et al. (Oxford, 2016), pp. 243–59.
+
+\item %CITED IN TEXT
+`Semantic Web', \textit{W3C}. \url{https://www.w3.org/standards/semanticweb/}. Accessed: 13 June 2017.
+
+\item %CITED IN TEXT
+`SKOS Simple Knowledge Organization System Reference', eds. A. Miles and S. Bechhofer, \textit{W3C}. \url{http://www.w3.org/TR/skos-reference/}. W3C Recommendation. Created: 18 August 2009.
+
+\item %CITED IN TEXT
+`Time Ontology in OWL', eds. S. Cox and C. Little, \textit{W3C}. \url{http://www.w3.org/TR/owl-time/}. W3C Candidate Recommendation. Created: 6 June 2017.
+
+\item %CITED IN TEXT
+`UNESCO Thesaurus', \textit{UNESCO}. \url{http://vocabularies.unesco.org/}. Accessed: 20 December 2017.
+
+\item %CITED IN TEXT
+Vandenbussche, P. et al., `Linked Open Vocabularies: A Gateway to Reusable Semantic Vocabularies on the Web', \textit{Semantic Web} 8.3 (2017), 437–52.
+
+\item %CITED IN TEXT
+Van Assem, M., et al., `A Method for Converting Thesauri to RDF/OWL', \textit{International Semantic Web Conference} (Hiroshima, 2004), 17–31.
+
+\item %CITED IN TEXT
+Van Assem, M. et al., `A Method to Convert Thesauri to SKOS', \textit{European Semantic Web Conference} (Budva, 2006), 95–109.
+
+\item %CITED IN TEXT
+Van Assem, M., \textit{Converting and Integrating Vocabularies for the Semantic Web}. Dissertation DPhil. VU University Amsterdam. 2010. \url{https://research.vu.nl/ws/portalfiles/portal/42185333/complete+dissertation.pdf}. 
+
+\item %CITED IN TEXT
+Wilkinson, M. D. et al., `The FAIR Guiding Principles for Scientific Data Management and Stewardship', \textit{Scientific Data} 3.160018 (2016).
+
+\item %CITED IN TEXT
+\textit{WordNet 3.0 in RDF}, eds. M. van Assem and J. van Ossenbruggen. \url{http://semanticweb.cs.vu.nl/lod/wn30/}. Last updated: 25 September 2010.
+
+\item %CITED IN TEXT
+`XKOS: An SKOS Extension for Representing Statistical Classifications', ed. F. Cotton, \textit{DDI Alliance}. \url{http://rdf-vocabulary.ddialliance.org/xkos.html}. Unofficial Draft. Created: 18 January 2017.
+
+\end{list}
