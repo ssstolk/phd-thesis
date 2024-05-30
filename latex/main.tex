@@ -1,0 +1,96 @@
+\documentclass[twoside,table,11pt,numbers=endperiod]{scrbook}
+
+\input{latex-commands}
+
+\title{Digital Thesauri as Semantic Treasure Troves}
+\subtitle{A Linguistic Linked Data Approach to \emph{A Thesaurus of Old English}}
+\author{Sander Stolk}
+
+
+\begin{document}
+
+\frontmatter \setcounter{chapter}{-1} 
+\include{apparatus/title}
+\include{apparatus/copyright}
+\include{apparatus/titlepage}
+\include{apparatus/promotores}
+
+\include{apparatus/preface}
+
+\tableofcontents
+
+\mainmatter
+%\begin{comment}
+
+%%%%%%%%%%%%%% INTRO %%%%%%%%%%%%%%
+
+\include{introduction/body}
+
+%%%%%%%%%%%%%% PART I %%%%%%%%%%%%%%
+\part[Historical Language Thesauri and Their Characteristics]{Historical Language Thesauri and\\Their Characteristics}
+
+% Content
+\include{Stolk_thes-content/preamble}
+\include{Stolk_thes-content/body}
+
+% Functionality
+\include{Stolk_thes-functionality/preamble}
+\include{Stolk_thes-functionality/body}
+
+
+%%%%%%%%%%%%%% PART II %%%%%%%%%%%%%%
+\part[Historical Language Thesauri and a Digital Form on the Semantic Web]{Historical Language Thesauri and\\a Digital Form on the\\Semantic Web}
+
+% Digital form for Thesauri
+\include{Stolk_thes-digital-form/preamble}
+\include{Stolk_thes-digital-form/body}
+
+% OntoLex and Onomasiological Ordering: Supporting Topical Thesauri
+\include{Stolk2017/preamble} \includepdf[pagecommand={\thispagestyle{plain}}, offset={\horizontalOffset} 0, pages=-, addtotoc={1,chapter,0,OntoLex and onomasiological ordering: Supporting topical thesauri,Stolk2017}]{Stolk2017/article.pdf}
+
+% lemon-tree: Representing Topical Thesauri on the Semantic Web
+\include{Stolk2019a/preamble}
+\includepdf[pagecommand={\thispagestyle{plain}}, offset={\horizontalOffset} 0, pages=-, addtotoc={1,chapter,0,\emph{lemon-tree}: Representing topical thesauri on the Semantic Web,Stolk2019a}]{Stolk2019a/article.pdf}
+
+%%%%%%%%%%%%%% PART III %%%%%%%%%%%%%%
+\part[Disseminating and Evaluating \textit{A Thesaurus of Old English} as Linguistic Linked Data]{Disseminating and Evaluating\\\textit{A Thesaurus of Old English}\\as Linguistic Linked Data}
+
+% A Thesaurus of Old English as Linguistic Linked Data
+\include{Stolk2019b/preamble}
+\includepdf[pagecommand={\thispagestyle{plain}}, offset={\horizontalOffset} 0, pages=-, addtotoc={1,chapter,0,\emph{A Thesaurus of Old English} as Linguistic Linked Data,Stolk2019b}, scale=0.9]{Stolk2019b/article.pdf}
+
+% Evoke: Exploring and Extending A Thesaurus of Old English using a Linked Data Approach
+\include{Stolk2021a/preamble}
+\include{Stolk2021a/article-nocompression}
+%\includepdf[pagecommand={\thispagestyle{plain}}, offset={\horizontalOffset} 0, pages=-, addtotoc={1,chapter,0,Evoke: Exploring and extending \emph{A Thesaurus of Old English} using a Linked Data approach,Stolk2021a}]{Stolk2021a/article.pdf}
+
+% Research case studies with A Thesaurus of Old English and Evoke
+\include{Stolk2021x/preamble}
+\include{Stolk2021x/body}
+
+% A Case of Kinship: Onomasiological Explorations of KINSHIP in Old Frisian and Old English
+\include{Stolk2021b/preamble} %\include{Stolk2021b/body}
+\include{Stolk2021b/article-nocompression}
+%\includepdf[pagecommand={\thispagestyle{plain}}, offset={\horizontalOffset} 0, pages=-, addtotoc={1,chapter,0,A case of kinship: Onomasiological explorations of KINSHIP in Old Frisian and Old English,Stolk2021b}]{Stolk2021b/article.pdf}
+
+
+%%%%%%%%%%%%%% CONCLUSION %%%%%%%%%%%%%%
+
+\include{conclusion/body}
+%\end{comment}
+\backmatter \setcounter{chapter}{-1}
+\include{apparatus/cv}
+\include{apparatus/publications}
+\include{apparatus/sourcecode}
+\include{apparatus/summaryNL}
+
+\end{document}
+
+
+%%%% https://www.staff.universiteitleiden.nl/research/phds/phd-trajectory#step-4-phd-candidate-submission-of-the-manuscript
+
+
+% LUCAS promovendibeleid vanaf 1-9-2019.pdf
+% - Printing costs manuscript for doctorate committee paid by LUCAS (max. 5 copies): Yes
+% - Financial contribution to defense costs by LUCAS: € 1.000
+% - Reimbursement of dissertation printing costs by University Library: € 500
